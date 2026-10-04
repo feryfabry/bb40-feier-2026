@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Alles Gute zum 40., Birgit &amp; Benny</title>
+  <style>
+    :root {
+      --night: #1a0b3b;
+      --dusk: #3a0f5c;
+      --magenta: #ff3d9a;
+      --cyan: #2de2e6;
+      --sun: #ffb347;
+      --paper: #f5eefc;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      background: linear-gradient(180deg, var(--night) 0%, var(--dusk) 65%, #7a1670 100%) fixed;
+      color: var(--paper);
+      font-family: "Trebuchet MS", "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.25rem 3rem;
+    }
+    .sun {
+      width: min(52vw, 240px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--sun) 10%, var(--magenta) 90%);
+      -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 14px, transparent 14px 18px);
+      mask-image: repeating-linear-gradient(180deg, #000 0 14px, transparent 14px 18px);
+      margin-bottom: 1.25rem;
+    }
+    h1 {
+      margin: 0 0 0.5rem;
+      font-family: Impact, "Arial Black", "Trebuchet MS", sans-serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: clamp(2rem, 7vw, 3.75rem);
+      line-height: 1.1;
+      text-align: center;
+      letter-spacing: 0.01em;
+      text-shadow: 3px 3px 0 var(--magenta), 6px 6px 0 var(--cyan);
+    }
+    h2 {
+      margin: 0 0 0.5rem;
+      font-family: Impact, "Arial Black", "Trebuchet MS", sans-serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: clamp(1.6rem, 6vw, 3rem);
+      line-height: 1.1;
+      text-align: center;
+      color: var(--cyan);
+      text-shadow: 3px 3px 0 var(--magenta);
+    }
+    .lead {
+      margin: 1.25rem 0 1.75rem;
+      max-width: 36rem;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .player {
+      width: min(100%, 860px);
+      aspect-ratio: 16 / 9;
+      border: 3px solid var(--cyan);
+      box-shadow: 0 0 0 3px var(--night), 0 0 28px rgba(45, 226, 230, 0.45);
+      background: #000;
+    }
+    .player iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .from {
+      margin-top: 1.75rem;
+      text-align: center;
+      color: var(--cyan);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="sun" aria-hidden="true"></div>
+  <h1>Alles Gute zum 40.,</h1>
+  <h2>Birgit &amp; Benny!</h2>
+  <p class="lead">Ein Rückblick auf unsere gemeinsamen Jahre. Ton an und viel Spaß beim Anschauen.</p>
+
+  <div class="player">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/gH6wkffi9gA"
+      title="Geburtstagsvideo für Birgit &amp; Benny"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+
+  <p class="from">Von EURE Alena &amp; Fery</p>
+</body>
+</html>
