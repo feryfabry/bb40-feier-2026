@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Alles Gute zum 40., Benny &amp; Birgit</title>
+  <title>Alles Gute zum 40., Birgit &amp; Benny</title>
   <style>
     :root {
       --night: #1a0b3b;
       --dusk: #3a0f5c;
       --magenta: #ff3d9a;
       --cyan: #2de2e6;
-      --sun: #ffb347;
       --paper: #f5eefc;
     }
     * { box-sizing: border-box; }
@@ -57,14 +56,39 @@
       text-align: center;
       font-size: 1.1rem;
     }
-    .player {
-      width: min(100%, 860px);
-      aspect-ratio: 16 / 9;
+    .box {
+      width: min(100%, 460px);
+      padding: 1.5rem;
+      text-align: center;
       border: 3px solid var(--cyan);
       box-shadow: 0 0 0 3px var(--night), 0 0 28px rgba(45, 226, 230, 0.45);
-      background: #000;
+      background: rgba(10, 4, 28, 0.55);
     }
-    .player iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .box label { display: block; margin-bottom: 0.6rem; font-weight: bold; }
+    .row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    input[type="password"] {
+      flex: 1 1 12rem;
+      min-width: 0;
+      padding: 0.7rem 0.8rem;
+      font: inherit;
+      color: var(--paper);
+      background: #0d0522;
+      border: 2px solid var(--paper);
+    }
+    button, .open {
+      padding: 0.7rem 1.1rem;
+      font: inherit;
+      font-weight: bold;
+      color: var(--night);
+      background: var(--cyan);
+      border: 2px solid var(--cyan);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    button:hover, .open:hover { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+    input:focus-visible, button:focus-visible, .open:focus-visible { outline: 3px solid var(--magenta); outline-offset: 2px; }
+    #msg { min-height: 1.5rem; margin: 0.75rem 0 0; color: #ff8fc2; }
     .from {
       margin-top: 1.75rem;
       text-align: center;
@@ -79,17 +103,59 @@
     <img class="badge" src="BB40.jpg" alt="40. Geburtstag">
     <p class="line">Benny &amp; Birgit!</p>
   </header>
-  <p class="lead">Ein Rückblick auf unsere gemeinsamen Jahre. Ton an und viel Spaß beim Anschauen.</p>
+  <p class="lead">Ein Rückblick auf unsere gemeinsamen Jahre. Einfach Video mit dem Passwort, das Ihr von uns bekommen habt, anschauen oder herunterladen 😊</p>
 
-  <div class="player">
-    <iframe
-      src="https://www.youtube-nocookie.com/embed/HiSrSwaJbs0"
-      title="Geburtstagsvideo für Benny &amp; Birgit"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <form class="box" id="gate">
+    <label for="pw">Passwort</label>
+    <div class="row">
+      <input id="pw" type="password" autocomplete="off" required>
+      <button type="submit">Video freischalten</button>
+    </div>
+    <p id="msg" role="alert"></p>
+  </form>
+
+  <div class="box" id="result" hidden>
+    <p>Das Video liegt in der Cloud. Dort kannst du es ansehen oder herunterladen.</p>
+    <a class="open" id="link" href="#" target="_blank" rel="noopener noreferrer">Video öffnen</a>
   </div>
 
   <p class="from">Von Alena &amp; Fery 😊</p>
+
+  <script>
+    // Verschlüsselter Drive-Link. Erzeugt mit verschluesseln.html, hier einfügen:
+    const DATA = "Vx+GbdmOiqo8CgzHcWVg3lJ0kVI6K+78rhOHbqqBiLkv7apmL1jI5U/FuppJdN8CWS1/4zZgitkHvijpNRRvMccg3g2nocNK4rlWhdS/BKB/+Ng0wkpRKSWeNNeSi5DbEnN43F1A2nTYN7jHtnmChKDSEU3e9iPx6BdoWPTbtkWW";
+
+    // BEGIN-CRYPTO
+    async function entschluesseln(passwort, daten) {
+      const raw = Uint8Array.from(atob(daten), c => c.charCodeAt(0));
+      const salt = raw.slice(0, 16), iv = raw.slice(16, 28), ct = raw.slice(28);
+      const material = await crypto.subtle.importKey(
+        "raw", new TextEncoder().encode(passwort), "PBKDF2", false, ["deriveKey"]);
+      const key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt, iterations: 200000, hash: "SHA-256" },
+        material, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      const klar = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ct);
+      return new TextDecoder().decode(klar);
+    }
+    // END-CRYPTO
+
+    const form = document.getElementById("gate");
+    const msg = document.getElementById("msg");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.textContent = "";
+      try {
+        const url = await entschluesseln(document.getElementById("pw").value, DATA);
+        if (!/^https:\/\/(drive|docs)\.google\.com\/|^https:\/\/drive\.usercontent\.google\.com\//.test(url)) {
+          throw new Error("unerwarteter Link");
+        }
+        document.getElementById("link").href = url;
+        form.hidden = true;
+        document.getElementById("result").hidden = false;
+      } catch (err) {
+        msg.textContent = "Das Passwort stimmt nicht.";
+      }
+    });
+  </script>
 </body>
 </html>
