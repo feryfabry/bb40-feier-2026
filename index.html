@@ -26,36 +26,30 @@
       align-items: center;
       padding: 2.5rem 1.25rem 3rem;
     }
-    .sun {
-      width: min(52vw, 240px);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: linear-gradient(180deg, var(--sun) 10%, var(--magenta) 90%);
-      -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 14px, transparent 14px 18px);
-      mask-image: repeating-linear-gradient(180deg, #000 0 14px, transparent 14px 18px);
-      margin-bottom: 1.25rem;
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
-    h1 {
-      margin: 0 0 0.5rem;
+    .line {
+      margin: 0;
       font-family: Impact, "Arial Black", "Trebuchet MS", sans-serif;
       font-style: italic;
       font-weight: 900;
-      font-size: clamp(2rem, 7vw, 3.75rem);
-      line-height: 1.1;
+      font-size: clamp(1.75rem, 6vw, 3.25rem);
+      line-height: 1.15;
       text-align: center;
       letter-spacing: 0.01em;
       text-shadow: 3px 3px 0 var(--magenta), 6px 6px 0 var(--cyan);
     }
-    h2 {
-      margin: 0 0 0.5rem;
-      font-family: Impact, "Arial Black", "Trebuchet MS", sans-serif;
-      font-style: italic;
-      font-weight: 900;
-      font-size: clamp(1.6rem, 6vw, 3rem);
-      line-height: 1.1;
-      text-align: center;
-      letter-spacing: 0.01em;
-      text-shadow: 3px 3px 0 var(--magenta), 6px 6px 0 var(--cyan);
+    /* Schwarzer Bildhintergrund wird mit "screen" unsichtbar, nur die Neonfarben bleiben */
+    .badge {
+      display: block;
+      width: min(100%, 560px);
+      height: auto;
+      margin: 0.5rem 0;
+      mix-blend-mode: screen;
     }
     .lead {
       margin: 1.25rem 0 1.75rem;
@@ -80,14 +74,16 @@
   </style>
 </head>
 <body>
-  <div class="sun" aria-hidden="true"></div>
-  <h1>Alles Gute zum 40.,</h1>
-  <h2>Benny &amp; Birgit!</h2>
+  <header class="title">
+    <p class="line">Alles Gute zum</p>
+    <img class="badge" src="BB40.jpg" alt="40. Geburtstag">
+    <p class="line">Benny &amp; Birgit!</p>
+  </header>
   <p class="lead">Ein Rückblick auf unsere gemeinsamen Jahre. Ton an und viel Spaß beim Anschauen.</p>
 
   <div class="player">
     <iframe
-      src="https://www.youtube-nocookie.com/embed/gH6wkffi9gA"
+      src="https://www.youtube-nocookie.com/embed/HiSrSwaJbs0"
       title="Geburtstagsvideo für Birgit &amp; Benny"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
